@@ -1,0 +1,121 @@
+hospital_name,blood_type,demand_units,available_units,urgency_level
+City General Hospital,A+,25,30,High
+Memorial Medical Center,A+,18,22,Medium
+Regional Hospital,A+,15,10,High
+Unity Health Center,A+,22,25,Low
+Metropolitan Hospital,A+,30,28,High
+Central Medical,A+,12,15,Medium
+Northside Hospital,A+,20,18,High
+West End Medical,A+,14,20,Low
+Eastwood Clinic,A+,25,22,High
+Southern Health,A+,18,15,Medium
+City General Hospital,A-,10,8,High
+Memorial Medical Center,A-,8,12,Low
+Regional Hospital,A-,12,10,High
+Unity Health Center,A-,6,9,Low
+Metropolitan Hospital,A-,15,12,High
+Central Medical,A-,9,7,Medium
+Northside Hospital,A-,11,14,Low
+West End Medical,A-,7,10,Medium
+Eastwood Clinic,A-,13,11,High
+Southern Health,A-,10,8,Medium
+City General Hospital,B+,20,25,Medium
+Memorial Medical Center,B+,15,18,High
+Regional Hospital,B+,22,20,High
+Unity Health Center,B+,18,22,Low
+Metropolitan Hospital,B+,25,28,High
+Central Medical,B+,12,15,Medium
+Northside Hospital,B+,20,16,High
+West End Medical,B+,14,18,Low
+Eastwood Clinic,B+,30,25,High
+Southern Health,B+,16,14,Medium
+City General Hospital,B-,9,7,High
+Memorial Medical Center,B-,6,10,Low
+Regional Hospital,B-,11,8,High
+Unity Health Center,B-,8,12,Low
+Metropolitan Hospital,B-,13,10,High
+Central Medical,B-,7,9,Medium
+Northside Hospital,B-,10,12,Low
+West End Medical,B-,5,8,Medium
+Eastwood Clinic,B-,12,9,High
+Southern Health,B-,9,6,Medium
+City General Hospital,O+,35,40,High
+Memorial Medical Center,O+,28,25,High
+Regional Hospital,O+,30,28,High
+Unity Health Center,O+,25,30,Low
+Metropolitan Hospital,O+,40,38,High
+Central Medical,O+,22,25,Medium
+Northside Hospital,O+,32,28,High
+West End Medical,O+,20,25,Low
+Eastwood Clinic,O+,38,35,High
+Southern Health,O+,26,24,Medium
+City General Hospital,O-,15,12,High
+Memorial Medical Center,O-,10,15,Low
+Regional Hospital,O-,18,15,High
+Unity Health Center,O-,12,16,Low
+Metropolitan Hospital,O-,20,18,High
+Central Medical,O-,14,12,Medium
+Northside Hospital,O-,16,20,Low
+West End Medical,O-,11,14,Medium
+Eastwood Clinic,O-,22,19,High
+Southern Health,O-,15,13,Medium
+City General Hospital,AB+,8,12,Medium
+Memorial Medical Center,AB+,6,10,Low
+Regional Hospital,AB+,10,8,High
+Unity Health Center,AB+,7,9,Low
+Metropolitan Hospital,AB+,12,15,High
+Central Medical,AB+,5,8,Medium
+Northside Hospital,AB+,9,11,Low
+West End Medical,AB+,4,7,Medium
+Eastwood Clinic,AB+,14,12,High
+Southern Health,AB+,8,6,Medium
+City General Hospital,AB-,5,3,High
+Memorial Medical Center,AB-,3,6,Low
+Regional Hospital,AB-,6,4,High
+Unity Health Center,AB-,4,7,Low
+Metropolitan Hospital,AB-,8,6,High
+Central Medical,AB-,3,5,Medium
+Northside Hospital,AB-,5,8,Low
+West End Medical,AB-,2,4,Medium
+Eastwood Clinic,AB-,7,5,High
+Southern Health,AB-,4,3,Medium
+Children's Hospital,A+,15,20,High
+Children's Hospital,A-,8,10,High
+Children's Hospital,B+,12,15,High
+Children's Hospital,B-,6,8,High
+Children's Hospital,O+,25,30,High
+Children's Hospital,O-,12,15,High
+Trauma Center,A+,30,25,High
+Trauma Center,A-,12,10,High
+Trauma Center,B+,25,22,High
+Trauma Center,B-,10,8,High
+Trauma Center,O+,40,35,High
+Trauma Center,O-,18,15,High
+Trauma Center,AB+,15,12,High
+Trauma Center,AB-,8,6,High
+Emergency Unit,A+,20,18,High
+Emergency Unit,A-,9,7,High
+Emergency Unit,B+,18,15,High
+Emergency Unit,B-,7,5,High
+Emergency Unit,O+,35,30,High
+Emergency Unit,O-,15,12,High
+Emergency Unit,AB+,12,10,High
+Emergency Unit,AB-,6,4,High
+Rural Clinic,A+,10,15,Low
+Rural Clinic,A-,5,8,Low
+Rural Clinic,B+,8,12,Low
+Rural Clinic,B-,4,6,Low
+Rural Clinic,O+,15,20,Low
+Rural Clinic,O-,7,10,Low
+Rural Clinic,AB+,6,9,Low
+Rural Clinic,AB-,3,5,Low
+Maternity Hospital,A+,18,22,High
+Maternity Hospital,A-,9,12,High
+Maternity Hospital,B+,15,18,High
+Maternity Hospital,B-,8,10,High
+Maternity Hospital,O+,28,32,High
+Maternity Hospital,O-,12,15,High
+Maternity Hospital,AB+,10,13,High
+Maternity Hospital,AB-,5,7,High
+Oncology Center,A+,12,15,Medium
+Oncology Center,O+,20,25,Medium
