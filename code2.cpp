@@ -1,72 +1,90 @@
-
 #include <iostream>
-#include <vector>
+#include <string>
 using namespace std;
 
-/*
+// Structure to store candidate information
+struct Candidate {
+    string name;
+    bool isLocal;       // true if Vishalnagari student
+    int experience;
+    int academicScore;
+    int certifications;
+};
 
- Idea:
- - Visitor patterns repeat daily (peak hours, low hours).
- - We use recursion to predict footfall for a future hour.
- - Memoization is used to avoid recomputing results.
-*/
+// Function to swap two candidates
+void swap(Candidate &a, Candidate &b) {
+    Candidate temp = a;
+    a = b;
+    b = temp;
+}
 
-// Memoization array (stores already computed predictions)
-int memo[100];
+// Function to heapify a subtree rooted at index i (for max-heap)
+void heapify(Candidate arr[], int n, int i) {
+    int largest = i; // Initialize largest as root
+    int left = 2*i + 1;
+    int right = 2*i + 2;
 
-// Recursive function to predict footfall
-int predictFootfall(int hour, vector<int>& history) {
+    auto compare = [](Candidate a, Candidate b) {
+        if (a.isLocal != b.isLocal)
+            return a.isLocal < b.isLocal; // local first
+        if (a.experience != b.experience)
+            return a.experience < b.experience;
+        if (a.academicScore != b.academicScore)
+            return a.academicScore < b.academicScore;
+        return a.certifications < b.certifications;
+    };
 
-    // Base case:
-    // If the hour exists in historical data, return it directly
-    if (hour < history.size()) {
-        return history[hour];
+    if (left < n && compare(arr[largest], arr[left]))
+        largest = left;
+    if (right < n && compare(arr[largest], arr[right]))
+        largest = right;
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
     }
+}
 
-    // If already computed, return stored value
-    if (memo[hour] != -1) {
-        return memo[hour];
+// Function to build max-heap
+void buildHeap(Candidate arr[], int n) {
+    for (int i = n/2 - 1; i >= 0; i--) {
+        heapify(arr, n, i);
     }
+}
 
-    /*
-      Pattern recognition:
-      Footfall often depends on previous hours.
-      We assume the current hour footfall is the
-      average of the previous two hours.
-    */
-    int prev1 = predictFootfall(hour - 1, history);
-    int prev2 = predictFootfall(hour - 2, history);
-
-    memo[hour] = (prev1 + prev2) / 2;
-
-    return memo[hour];
+// Function to perform heap sort (extract candidates in order)
+void heapSort(Candidate arr[], int n) {
+    buildHeap(arr, n);
+    for (int i = n-1; i >= 0; i--) {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
 }
 
 int main() {
+    // Step 1: Create candidates array
+    Candidate candidates[5] = {
+        {"Shreya", true, 3, 88, 2},
+        {"Dhanya", false, 5, 90, 1},
+        {"Megha", true, 2, 80, 3},
+        {"Yashaswini", false, 4, 70, 2},
+        {"Poorvi", true, 4, 95, 1}
+    };
 
-    // Historical museum footfall data (hour-wise)
-    vector<int> footfall = {40, 60, 120, 200, 250, 220, 180};
+    int n = 5;
 
-    // Initialize memoization array
-    for (int i = 0; i < 100; i++) {
-        memo[i] = -1;
+    // Step 2: Sort candidates using heap sort based on priority
+    heapSort(candidates, n);
+
+    // Step 3: Print candidates in priority order (local first, etc.)
+    cout << "Selected candidates for the job:" << endl;
+    for (int i = n-1; i >= 0; i--) { // heapSort gives ascending, so print from end
+        cout << candidates[i].name
+             << " | Local: " << (candidates[i].isLocal ? "Yes" : "No")
+             << " | Exp: " << candidates[i].experience
+             << " | Score: " << candidates[i].academicScore
+             << " | Certs: " << candidates[i].certifications << endl;
     }
-
-    int futureHour = 9;  // Predict footfall for hour 9
-
-    cout << "Predicting museum footfall...\n\n";
-
-    int predictedVisitors = predictFootfall(futureHour, footfall);
-
-    cout << "Predicted number of visitors at hour "
-         << futureHour << " = "
-         << predictedVisitors << endl;
-
-    /*
-      Use case:
-      - If predicted visitors are high, increase staff.
-      - If low, reduce operational resources.
-    */
 
     return 0;
 }
