@@ -3,53 +3,87 @@
 using namespace std;
 
 /*
- Problem:
- Monitor AQI values over time in a school area.
- If the average AQI over a recent time window exceeds a safe limit,
- generate an alert for students and staff.
+PROBLEM:
+Monitor AQI values in a school area. If the average AQI over a recent
+time window exceeds a safe limit, generate an alert for students and staff.
+
+WHY SLIDING WINDOW:
+The sliding window allows efficient computation of averages over
+consecutive intervals without recalculating sums from scratch.
 */
 
-// Safe AQI limit for students
-const int SAFE_AQI = 100;
 
-int main() {
+const int SAFE_AQI = 100; // Safe AQI limit
 
-    // Sample AQI readings collected hourly
-    vector<int> aqiData = {72, 85, 90, 110, 130, 125, 95, 80};
+// Compute average of current window
+int computeAverage(int sum, int size) {
+    return sum / size;
+}
 
-    int windowSize = 3;   // Sliding window size (last 3 hours)
+// Check if average AQI exceeds safe limit
+bool checkAQIAlert(int avg) {
+    return avg > SAFE_AQI;
+}
+
+// Display AQI alert message
+void displayAlert(int avg) {
+    if(checkAQIAlert(avg)) {
+        cout << "ALERT: Unhealthy AQI detected! "
+             << "Students should limit outdoor activities.\n\n";
+    } else {
+        cout << "AQI is safe for students.\n\n";
+    }
+}
+
+// Monitor AQI readings using sliding window
+void monitorAQI(const vector<int> &aqiData, int windowSize) {
     int windowSum = 0;
 
-    cout << "Monitoring AQI levels...\n\n";
-
     // Initialize the first window
-    for (int i = 0; i < windowSize; i++) {
+    for(int i=0; i<windowSize; i++)
         windowSum += aqiData[i];
-    }
 
-    // Check AQI using Sliding Window
-    for (int i = windowSize; i <= aqiData.size(); i++) {
+    // Sliding window processing
+    for(int i = windowSize; i <= aqiData.size(); i++) {
+        int avgAQI = computeAverage(windowSum, windowSize);
+        cout << "Average AQI (last " << windowSize << " hours): " << avgAQI << endl;
 
-        // Compute average AQI of current window
-        int avgAQI = windowSum / windowSize;
-
-        cout << "Average AQI (last " << windowSize 
-             << " hours): " << avgAQI << endl;
-
-        // Alert if AQI is unsafe
-        if (avgAQI > SAFE_AQI) {
-            cout << "ALERT: Unhealthy AQI detected! "
-                 << "Students should limit outdoor activities.\n\n";
-        } else {
-            cout <<  AQI is safe for students.\n\n";
-        }
+        displayAlert(avgAQI);
 
         // Slide the window
-        if (i < aqiData.size()) {
-            windowSum -= aqiData[i - windowSize]; // remove old AQI
-            windowSum += aqiData[i];               // add new AQI
+        if(i < aqiData.size()) {
+            windowSum -= aqiData[i - windowSize];
+            windowSum += aqiData[i];
         }
     }
+}
 
+// Read AQI data from user
+vector<int> readAQIData(int n) {
+    vector<int> data(n);
+    cout << "Enter " << n << " AQI readings (hourly):\n";
+    for(int i=0; i<n; i++)
+        cin >> data[i];
+    return data;
+}
+
+// Controller function
+void runAQIMonitoring() {
+    int n, windowSize;
+
+    cout << "Enter number of AQI readings: ";
+    cin >> n;
+
+    vector<int> aqiData = readAQIData(n);
+
+    cout << "Enter sliding window size: ";
+    cin >> windowSize;
+
+    cout << "\nMonitoring AQI levels...\n\n";
+    monitorAQI(aqiData, windowSize);
+}
+
+int main() {
+    runAQIMonitoring();
     return 0;
 }
