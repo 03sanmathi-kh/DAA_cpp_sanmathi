@@ -2,33 +2,86 @@
 #include <string>
 using namespace std;
 
-// Searches rare malware patterns in logs
-void boyerMoore(string text, string pat) {
-    int n = text.length(), m = pat.length();
+/*
+PROBLEM STATEMENT:
+This program searches for a rare malware signature inside large system log data.
+Such signatures are difficult to detect using naive string matching methods.
+
+WHY BOYER–MOORE:
+Boyer–Moore algorithm reduces unnecessary comparisons by skipping characters
+based on mismatch information, making it suitable for large log files.
+*/
+
+// Build bad character shift table
+void prepareShiftTable(const string &pattern, int shift[]) {
+    int length = pattern.length();
+
+    for (int i = 0; i < 256; i++) {
+        shift[i] = length;
+    }
+
+    for (int i = 0; i < length - 1; i++) {
+        shift[pattern[i]] = length - 1 - i;
+    }
+}
+
+// Check if pattern matches at given index
+bool isPatternMatching(const string &text,
+                       const string &pattern,
+                       int startIndex) {
+    int j = pattern.length() - 1;
+
+    while (j >= 0) {
+        if (text[startIndex + j] != pattern[j]) {
+            return false;
+        }
+        j--;
+    }
+    return true;
+}
+
+// Boyer–Moore search implementation
+void boyerMooreSearch(const string &text, const string &pattern) {
+    int textLength = text.length();
+    int patternLength = pattern.length();
+
     int shift[256];
+    prepareShiftTable(pattern, shift);
 
-    for (int i = 0; i < 256; i++)
-        shift[i] = m;
+    int index = 0;
 
-    for (int i = 0; i < m - 1; i++)
-        shift[pat[i]] = m - 1 - i;
+    while (index <= textLength - patternLength) {
 
-    int i = 0;
-    while (i <= n - m) {
-        int j = m - 1;
+        int j = patternLength - 1;
 
-        while (j >= 0 && pat[j] == text[i + j])
+        while (j >= 0 &&
+               pattern[j] == text[index + j]) {
             j--;
+        }
 
         if (j < 0) {
-            cout << "Malicious signature found at index " << i << endl;
-            i += shift[text[i + m - 1]];
-        } else {
-            i += shift[text[i + j]];
+            cout << "Malicious signature found at index "
+                 << index << endl;
+
+            char nextChar = text[index + patternLength - 1];
+            index += shift[nextChar];
+        }
+        else {
+            char badChar = text[index + j];
+            index += shift[badChar];
         }
     }
 }
 
+// Wrapper function for malware scan
+void detectMalware() {
+    string logData = "safe_log MALWARE safe";
+    string malwareSignature = "MALWARE";
+
+    boyerMooreSearch(logData, malwareSignature);
+}
+
 int main() {
-    boyerMoore("safe_log MALWARE safe", "MALWARE");
+    detectMalware();
+    return 0;
 }
