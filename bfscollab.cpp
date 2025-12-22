@@ -1,36 +1,68 @@
 #include <iostream>
 using namespace std;
 
-int graphBFS[50][50];
-int visitedBFS[50];
-int distBFS[50];
-int q[100], front = 0, rear = 0;
+const int MAX = 50;
 
-void bfs(int n, int start) {
+int graph[MAX][MAX];
+int visited[MAX];
+int distanceFarm[MAX];
+int queueArr[100];
+int front = 0, rear = 0;
+
+// Queue operations
+void enqueue(int node) {
+    queueArr[rear++] = node;
+}
+
+int dequeue() {
+    return queueArr[front++];
+}
+
+bool isQueueEmpty() {
+    return front == rear;
+}
+
+// Reset visited and distance arrays
+void resetArrays(int n) {
     for (int i = 0; i < n; i++) {
-        visitedBFS[i] = 0;
-        distBFS[i] = -1;
+        visited[i] = 0;
+        distanceFarm[i] = -1;
     }
+}
 
-    visitedBFS[start] = 1;
-    distBFS[start] = 0;
-    q[rear++] = start;
+// BFS traversal
+void bfs(int n, int start) {
+    resetArrays(n);
 
-    while (front < rear) {
-        int u = q[front++];
+    visited[start] = 1;
+    distanceFarm[start] = 0;
+    enqueue(start);
+
+    while (!isQueueEmpty()) {
+        int u = dequeue();
 
         for (int v = 0; v < n; v++) {
-            if (graphBFS[u][v] == 1 && !visitedBFS[v]) {
-                visitedBFS[v] = 1;
-                distBFS[v] = distBFS[u] + 1;
-                q[rear++] = v;
+            if (graph[u][v] == 1 && !visited[v]) {
+                visited[v] = 1;
+                distanceFarm[v] = distanceFarm[u] + 1;
+                enqueue(v);
             }
         }
     }
 }
 
-int main() {
-    int n = 5;
+
+
+// Display the distances
+void displayDistances(int n, int start) {
+    cout << "Minimum hops from Farm " << start << ":\n";
+    for (int i = 0; i < n; i++) {
+        cout << "To Farm " << i << " = " << distanceFarm[i] << " steps\n";
+    }
+}
+
+// Initialize the graph
+void initializeGraph(int n) {
     int temp[5][5] = {
         {0,1,0,0,0},
         {1,0,1,0,0},
@@ -39,15 +71,25 @@ int main() {
         {0,0,1,1,0}
     };
 
-    for (int i=0;i<n;i++)
-        for (int j=0;j<n;j++)
-            graphBFS[i][j] = temp[i][j];
-
-    bfs(n, 0);
-
-    cout << "Fastest (minimum hops) from Farm 0:\n";
     for (int i = 0; i < n; i++)
-        cout << "To " << i << " = " << distBFS[i] << " steps\n";
+        for (int j = 0; j < n; j++)
+            graph[i][j] = temp[i][j];
+}
 
+
+// Controller function
+void runBFSExample() {
+    int n = 5;
+    int startFarm = 0;
+
+    initializeGraph(n);
+
+    bfs(n, startFarm);
+
+    displayDistances(n, startFarm);
+}
+
+int main() {
+    runBFSExample();
     return 0;
 }
