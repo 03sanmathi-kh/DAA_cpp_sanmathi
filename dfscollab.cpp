@@ -1,51 +1,72 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-int graphDFS[10][10];   // Adjacency matrix for routes between locations
-bool visitedDFS[10];    // Keeps track of visited nodes to avoid loops
-int path[10];           // Stores current route being explored
-int n;
+/*
+PROBLEM:
+Find all possible routes from a starting location (e.g., Farm)
+to a destination (e.g., Factory) in a network of roads. The network
+is represented using an adjacency matrix.
 
-// Depth-First Search function
-// u      → current node
-// target → destination we want to reach
-// depth  → position in the current path
+WHY DFS:
+Depth-First Search is ideal here because it explores one route completely
+before backtracking, allowing us to find all possible paths between nodes.
+*/
+
+/* ----------------------------
+   Global Variables
+   ---------------------------- */
+int n; // number of nodes
+vector<vector<int>> graphDFS;
+vector<bool> visitedDFS;
+vector<int> path; // stores current path
+
+/* ----------------------------
+   Function to Print Current Path
+   ---------------------------- */
+void printPath(int depth){
+    cout << "Route: ";
+    for(int i=0;i<=depth;i++)
+        cout << path[i] << " ";
+    cout << "\n";
+}
+
+/* ----------------------------
+   Recursive DFS Function
+   ---------------------------- */
 void dfs(int u, int target, int depth) {
+    visitedDFS[u] = true;
+    path[depth] = u;
 
-    visitedDFS[u] = true;     // mark current node as visited
-    path[depth] = u;          // store the node in our route path
+    cout << "Exploring node " << u << " at depth " << depth << "\n";
 
-    // If we reached the destination, print the entire route
-    if (u == target) {
-        cout << "Route: ";
-        for (int i = 0; i <= depth; i++)
-            cout << path[i] << " ";
-        cout << "\n";
-
-        visitedDFS[u] = false; // unmark for other possible paths
+    // If destination reached, print the route
+    if(u == target){
+        cout << "Destination reached! ";
+        printPath(depth);
+        visitedDFS[u] = false; // backtrack
+        cout << "Backtracking from node " << u << "\n\n";
         return;
     }
 
-    // Explore all neighbours of the current node
-    for (int v = 0; v < n; v++) {
-
-        // If route exists (1) and not already visited
-        if (graphDFS[u][v] == 1 && !visitedDFS[v])
-            dfs(v, target, depth + 1);   // go deeper into DFS
+    // Explore neighbors
+    for(int v=0;v<n;v++){
+        if(graphDFS[u][v] == 1 && !visitedDFS[v]){
+            cout << "Moving from node " << u << " to node " << v << "\n";
+            dfs(v, target, depth+1);
+        }
     }
 
-    // Backtracking step:
-    // Unmark current node so other paths can use it
+    // Backtracking
     visitedDFS[u] = false;
+    cout << "Backtracking from node " << u << " to previous node\n\n";
 }
 
-int main() {
-
-    n = 6; // Total 6 nodes (Farms, junctions, mills, factories)
-
-    // Graph adjacency matrix:
-    // 1 = direct road exists
-    // 0 = no road
+/* ----------------------------
+   Initialize Graph
+   ---------------------------- */
+void initializeGraph(){
+    n = 6; // total nodes
     int temp[6][6] = {
         {0,1,1,0,0,0},
         {1,0,1,1,0,0},
@@ -55,15 +76,38 @@ int main() {
         {0,0,0,1,1,0}
     };
 
-    // Load into graphDFS
-    for (int i=0;i<n;i++)
-        for (int j=0;j<n;j++)
+    graphDFS.resize(n, vector<int>(n));
+    visitedDFS.resize(n,false);
+    path.resize(n);
+
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
             graphDFS[i][j] = temp[i][j];
 
-    cout << "All possible routes from Farm 0 → Factory 5:\n";
+    cout << "Graph initialized with adjacency matrix:\n";
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++)
+            cout << graphDFS[i][j] << " ";
+        cout << "\n";
+    }
+    cout << "\n";
+}
 
-    // Start DFS from node 0 to node 5
-    dfs(0, 5, 0);
+/* ----------------------------
+   Controller Function
+   ---------------------------- */
+void runDFSExample(int start, int target){
+    cout << "Finding all routes from node " << start << " to node " << target << ":\n\n";
+    dfs(start, target, 0);
+    cout << "DFS traversal completed.\n";
+}
 
+/* ----------------------------
+   Main Function
+   ---------------------------- */
+int main(){
+    initializeGraph();
+    int start = 0, target = 5;
+    runDFSExample(start, target);
     return 0;
 }
