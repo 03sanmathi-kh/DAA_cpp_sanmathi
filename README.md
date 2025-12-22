@@ -1,1 +1,1 @@
-This repo contains simple C++ implementaion of single algorithm/ combination of one or more algorithms to solve a specific problem statement.
+Hello! This is Sanmathi! This repo contains simple C++ implementaion of single algorithm/ combination of one or more algorithms to solve a specific problem statement. Also,there are csv files for a few problems where datasets are taken into consideration.
