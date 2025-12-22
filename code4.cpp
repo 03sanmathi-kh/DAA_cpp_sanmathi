@@ -14,9 +14,7 @@ Greedy approach ensures patients with higher priority are treated first,
 maximizing the number of urgent patients handled within available doctor time.
 */
 
-/* ----------------------------
-   Patient Structure
-   ---------------------------- */
+
 struct Patient {
     int patientId;
     int priority;      // Higher value = higher priority
