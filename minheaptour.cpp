@@ -9,9 +9,7 @@ using namespace std;
    Each attraction stores:
      - id
      - current crowd count
-
-   A min-heap always keeps the least crowded spot at the top.In simple terms,the system can instantly recommend:"Go to this spot now, it has the lowest crowd."
-*/
+     */
 
 struct Spot {
     int id;
