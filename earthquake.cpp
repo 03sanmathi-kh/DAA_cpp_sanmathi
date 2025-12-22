@@ -4,56 +4,108 @@
 using namespace std;
 
 /*
-  This program uses BFS to check the building's structural elements
-  floor-by-floor and detect weak nodes.
-  Each element is a node, and connections (load paths)
-  are edges in an adjacency list.
+PROBLEM:
+To perform a structural scan of a building floor-by-floor to detect weak elements.
+Each structural element is a node in a graph, and load paths between them are edges.
+
+WHY BFS:
+Breadth-First Search is suitable because it explores nodes level by level,
+simulating a floor-by-floor inspection and detecting weak points in a logical order.
 */
+
+/* ----------------------------
+   Input Graph Function
+   ---------------------------- */
+vector<vector<int>> inputGraph(int n) {
+    vector<vector<int>> graph(n);
+    cout << "Enter adjacency list for each node (0-based indices).\n";
+    for(int i=0;i<n;i++){
+        int k;
+        cout << "Number of connections for node " << i << ": ";
+        cin >> k;
+        graph[i].resize(k);
+        cout << "Enter connected nodes: ";
+        for(int j=0;j<k;j++)
+            cin >> graph[i][j];
+    }
+    return graph;
+}
+
+
+vector<int> inputWeakNodes(int n) {
+    vector<int> weak(n);
+    cout << "Enter 1 if node is weak, 0 if strong:\n";
+    for(int i=0;i<n;i++){
+        cout << "Node " << i << ": ";
+        cin >> weak[i];
+    }
+    return weak;
+}
+
+/* ----------------------------
+   Display Graph
+   ---------------------------- */
+void displayGraph(const vector<vector<int>>& graph) {
+    cout << "\nGraph Structure (Adjacency List):\n";
+    for(size_t i=0;i<graph.size();i++){
+        cout << "Node " << i << ": ";
+        for(int j : graph[i])
+            cout << j << " ";
+        cout << "\n";
+    }
+}
+
 
 void bfsCheck(int start, vector<vector<int>>& graph, vector<int>& weak) {
     queue<int> q;
     vector<int> visited(graph.size(), 0);
-
     q.push(start);
     visited[start] = 1;
 
-    cout << "BFS Structural Scan (Floor-by-Floor):\n";
+    cout << "\nBFS Structural Scan (Floor-by-Floor):\n";
 
-    while (!q.empty()) {
-        int node = q.front();
-        q.pop();
+    int level = 0; // floor level
+    while(!q.empty()){
+        int sz = q.size();
+        cout << "Scanning floor level " << level << ":\n";
 
-        cout << "Checking element " << node;
+        for(int i=0;i<sz;i++){
+            int node = q.front(); q.pop();
 
-        if (weak[node] == 1)
-            cout << "  --> WEAK POINT FOUND!";
+            cout << "Checking element " << node;
+            if(weak[node] == 1)
+                cout << "  --> WEAK POINT FOUND!";
+            cout << "\n";
 
-        cout << endl;
-
-        for (int next : graph[node]) {
-            if (!visited[next]) {
-                visited[next] = 1;
-                q.push(next);
+            for(int next : graph[node]){
+                if(!visited[next]){
+                    visited[next] = 1;
+                    q.push(next);
+                }
             }
         }
+        level++;
+        cout << "\n";
     }
 }
 
-int main() {
-    // Example building graph with 6 structural nodes
-    vector<vector<int>> graph = {
-        {1, 2},   // Node 0 connected to 1,2
-        {0, 3},   // Node 1 connected to 0,3
-        {0, 3},   // Node 2 connected to 0,3
-        {1, 2, 4},// Node 3 connected to 1,2,4
-        {3, 5},   // Node 4 connected to 3,5
-        {4}       // Node 5 connected to 4
-    };
 
-    // 1 = weak element, 0 = strong
-    vector<int> weak = {0, 1, 0, 0, 1, 0};
+void runStructuralScan(){
+    int n;
+    cout << "Enter number of structural nodes: ";
+    cin >> n;
+
+    vector<vector<int>> graph = inputGraph(n);
+    displayGraph(graph);
+
+    vector<int> weak = inputWeakNodes(n);
 
     bfsCheck(0, graph, weak);
+}
 
+
+int main(){
+    cout << "=== Building Structural BFS Scan ===\n\n";
+    runStructuralScan();
     return 0;
 }
