@@ -1,124 +1,113 @@
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 /*
-PROBLEM:
-Schedule patients for limited doctor time slots efficiently in an
-Ayushman Bharat health camp. Patients have priorities (emergency > medium > normal)
-and require varying treatment times.
-
-WHY GREEDY:
-Greedy approach ensures patients with higher priority are treated first,
-maximizing the number of urgent patients handled within available doctor time.
+    This structure stores details of one patient's appointment.
+    We keep everything together so it is easy to manage.
 */
-
-
-struct Patient {
-    int patientId;
-    int priority;      // Higher value = higher priority
-    int treatmentTime; // Time required in minutes
-
-    // Comparator for priority queue (Greedy choice)
-    bool operator<(const Patient& other) const {
-        return priority < other.priority; // higher priority patients first
-    }
+struct Appointment
+{
+    int patientId;   // Patient number
+    int start;       // Starting time
+    int end;         // Ending time
 };
 
-/* ----------------------------
-   Input Patients
-   ---------------------------- */
-vector<Patient> inputPatients(int n) {
-    vector<Patient> patients(n);
-    for(int i=0;i<n;i++){
-        cout << "Enter Patient ID: ";
-        cin >> patients[i].patientId;
-        cout << "Enter Priority (1=Normal, 2=Medium, 3=Emergency): ";
-        cin >> patients[i].priority;
-        cout << "Enter Treatment Time (mins): ";
-        cin >> patients[i].treatmentTime;
-        cout << endl;
+int main()
+{
+    int n;
+    cout << "Enter number of patients: ";
+    cin >> n;
+
+    // Vector to store all appointments
+    vector<Appointment> appointments;
+
+    /*
+        Taking input from user
+        One appointment at a time
+    */
+    for (int i = 0; i < n; i++)
+    {
+        Appointment temp;
+
+        temp.patientId = i + 1;
+
+        cout << "\nEnter start time for patient " << temp.patientId << ": ";
+        cin >> temp.start;
+
+        cout << "Enter end time for patient " << temp.patientId << ": ";
+        cin >> temp.end;
+
+        appointments.push_back(temp);
     }
-    return patients;
-}
 
-/* ----------------------------
-   Display Doctor Availability
-   ---------------------------- */
-void displayDoctorTime(const vector<int>& doctorTime) {
-    cout << "Current Doctor Availability (minutes left): ";
-    for(size_t i=0;i<doctorTime.size();i++)
-        cout << "Doctor " << i+1 << ": " << doctorTime[i] << " ";
-    cout << "\n";
-}
-
-/* ----------------------------
-   Schedule Appointments
-   ---------------------------- */
-void scheduleAppointments(vector<Patient>& patients, vector<int>& doctorTime) {
-    priority_queue<Patient> pq;
-
-    // Push all patients into priority queue
-    for(auto p : patients)
-        pq.push(p);
-
-    cout << "\n--- Scheduling Patients ---\n\n";
-
-    while(!pq.empty()){
-        Patient current = pq.top(); pq.pop();
-        bool assigned = false;
-
-        cout << "Trying to assign Patient " << current.patientId
-             << " | Priority: " << current.priority
-             << " | Treatment: " << current.treatmentTime << " mins\n";
-
-        // Assign to first available doctor
-        for(size_t i=0;i<doctorTime.size();i++){
-            if(doctorTime[i] >= current.treatmentTime){
-                doctorTime[i] -= current.treatmentTime;
-                cout << "Assigned to Doctor " << i+1
-                     << " | Remaining Doctor Time: " << doctorTime[i] << " mins\n\n";
-                assigned = true;
-                break;
+    /*
+        STEP 1:
+        Sort all appointments based on END TIME.
+        Appointment that finishes first should come first.
+        This helps us choose maximum non-overlapping appointments.
+    */
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (appointments[i].end > appointments[j].end)
+            {
+                // Swap appointments
+                Appointment swapTemp = appointments[i];
+                appointments[i] = appointments[j];
+                appointments[j] = swapTemp;
             }
         }
+    }
 
-        if(!assigned){
-            cout << "Could NOT assign Patient " << current.patientId
-                 << " (No available time slots)\n\n";
+    cout << "\nAppointments after sorting by end time:\n";
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Patient " << appointments[i].patientId
+             << " -> [" << appointments[i].start
+             << ", " << appointments[i].end << "]\n";
+    }
+
+    /*
+        STEP 2:
+        Greedy selection of appointments
+    */
+
+    vector<Appointment> selected;
+
+    // First appointment is always selected
+    selected.push_back(appointments[0]);
+    int lastEndTime = appointments[0].end;
+
+    /*
+        Check remaining appointments
+        Select only if start time >= last selected end time
+    */
+    for (int i = 1; i < n; i++)
+    {
+        if (appointments[i].start >= lastEndTime)
+        {
+            selected.push_back(appointments[i]);
+            lastEndTime = appointments[i].end;
         }
-
-        displayDoctorTime(doctorTime);
     }
 
-    cout << "\nAll patients processed.\n";
-}
-
-/* ----------------------------
-   Controller Function
-   ---------------------------- */
-void runAppointmentScheduler() {
-    int doctors, numPatients;
-    cout << "Enter number of doctors available: ";
-    cin >> doctors;
-
-    vector<int> doctorTime(doctors);
-    for(int i=0;i<doctors;i++){
-        cout << "Enter available time (minutes) for Doctor " << i+1 << ": ";
-        cin >> doctorTime[i];
+    /*
+        STEP 3:
+        Display final result
+    */
+    cout << "\nSelected appointments (No time clash):\n";
+    for (int i = 0; i < selected.size(); i++)
+    {
+        cout << "Patient " << selected[i].patientId
+             << " -> [" << selected[i].start
+             << ", " << selected[i].end << "]\n";
     }
 
-    cout << "\nEnter number of patients: ";
-    cin >> numPatients;
+    cout << "\nTotal patients treated: " << selected.size() << endl;
 
-    vector<Patient> patients = inputPatients(numPatients);
-
-    scheduleAppointments(patients, doctorTime);
-}
-
-int main() {
-    cout << "=== Ayushman Bharat Appointment Optimization ===\n\n";
-    runAppointmentScheduler();
     return 0;
 }
