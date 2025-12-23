@@ -1,0 +1,103 @@
+Patient_ID,Start_Time,End_Time,Consultation_Type,Priority_Level
+P001,0,15,General Checkup,Low
+P002,10,30,Orthopedics,Medium
+P003,20,35,Pediatrics,Low
+P004,30,45,Dermatology,Low
+P005,40,60,Cardiology,High
+P006,50,70,General Checkup,Low
+P007,60,75,Gynecology,Medium
+P008,65,90,Orthopedics,High
+P009,80,100,Pediatrics,Low
+P010,90,120,Cardiology,High
+P011,0,20,General Checkup,Low
+P012,15,35,Dermatology,Low
+P013,25,50,Orthopedics,Medium
+P014,45,65,Pediatrics,Low
+P015,55,80,Gynecology,Medium
+P016,70,95,Cardiology,High
+P017,85,110,Orthopedics,Medium
+P018,100,130,Cardiology,High
+P019,120,150,Gynecology,Medium
+P020,140,165,Pediatrics,Low
+P021,5,25,General Checkup,Low
+P022,20,40,Dermatology,Low
+P023,35,55,Orthopedics,Medium
+P024,50,75,Gynecology,Medium
+P025,65,85,Pediatrics,Low
+P026,80,105,Cardiology,High
+P027,95,125,Orthopedics,Medium
+P028,115,140,Gynecology,Medium
+P029,130,155,Pediatrics,Low
+P030,150,180,Cardiology,High
+P031,10,20,General Checkup,Low
+P032,20,30,Dermatology,Low
+P033,30,40,Pediatrics,Low
+P034,40,50,General Checkup,Low
+P035,50,60,General Checkup,Low
+P036,60,70,Dermatology,Low
+P037,70,80,Pediatrics,Low
+P038,80,90,General Checkup,Low
+P039,90,100,Dermatology,Low
+P040,100,110,Pediatrics,Low
+P041,0,30,Orthopedics,Medium
+P042,25,45,Gynecology,Medium
+P043,40,60,Pediatrics,Low
+P044,55,85,Cardiology,High
+P045,80,110,Orthopedics,Medium
+P046,105,135,Cardiology,High
+P047,130,160,Gynecology,Medium
+P048,155,185,Orthopedics,Medium
+P049,180,210,Cardiology,High
+P050,205,235,Gynecology,Medium
+P051,15,25,General Checkup,Low
+P052,25,35,Dermatology,Low
+P053,35,45,Pediatrics,Low
+P054,45,55,General Checkup,Low
+P055,55,65,General Checkup,Low
+P056,65,75,Dermatology,Low
+P057,75,85,Pediatrics,Low
+P058,85,95,General Checkup,Low
+P059,95,105,Dermatology,Low
+P060,105,115,Pediatrics,Low
+P061,5,15,General Checkup,Low
+P062,15,25,Dermatology,Low
+P063,25,35,Pediatrics,Low
+P064,35,45,General Checkup,Low
+P065,45,55,General Checkup,Low
+P066,55,65,Dermatology,Low
+P067,65,75,Pediatrics,Low
+P068,75,85,General Checkup,Low
+P069,85,95,Dermatology,Low
+P070,95,105,Pediatrics,Low
+P071,0,10,General Checkup,Low
+P072,10,20,Dermatology,Low
+P073,20,30,Pediatrics,Low
+P074,30,40,General Checkup,Low
+P075,40,50,General Checkup,Low
+P076,50,60,Dermatology,Low
+P077,60,70,Pediatrics,Low
+P078,70,80,General Checkup,Low
+P079,80,90,Dermatology,Low
+P080,90,100,Pediatrics,Low
+P081,100,115,Orthopedics,Medium
+P082,110,130,Cardiology,High
+P083,125,145,Gynecology,Medium
+P084,140,165,Orthopedics,Medium
+P085,160,185,Cardiology,High
+P086,180,205,Gynecology,Medium
+P087,200,225,Orthopedics,Medium
+P088,220,245,Cardiology,High
+P089,240,265,Gynecology,Medium
+P090,260,290,Cardiology,High
+P091,30,60,Orthopedics,Medium
+P092,55,90,Cardiology,High
+P093,85,120,Gynecology,Medium
+P094,115,150,Orthopedics,Medium
+P095,145,180,Cardiology,High
+P096,175,210,Gynecology,Medium
+P097,205,240,Orthopedics,Medium
+P098,235,270,Cardiology,High
+P099,265,300,Gynecology,Medium
+P100,290,330,Cardiology,High
+P101,310,350,Orthopedics,Medium
+P102,340,380,Cardiology,High
