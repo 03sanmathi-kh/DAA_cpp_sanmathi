@@ -120,7 +120,8 @@ public:
 
 
 
-int main() {
+int main()
+{
     Trie keywordIndex;
     SkipList shiftLogs;
     map<int, vector<string>> priorityNotes; // Red-Black Tree
